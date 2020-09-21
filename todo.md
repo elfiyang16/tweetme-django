@@ -70,3 +70,29 @@ Running migrations:
   Applying sessions.0001_initial... OK
   Applying tweets.0001_initial... OK
 ```
+
+
+- create and store data 
+
+` ./manage.py shell`  
+
+```python
+Python 3.7.9 (v3.7.9:13c94747c7, Aug 15 2020, 01:31:08) 
+[Clang 6.0 (clang-600.0.57)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from tweets.models import Tweet
+>>> obj = Tweet()
+>>> obj.content= "hello world"
+>>> obj.save()
+>>> exit()
+(venv)  elfi.yang@trussle.com@ip-192-168-43-77  ~/Documents/Tweetme-Django-React/tweetme   master ●  ./manage.py shell
+Python 3.7.9 (v3.7.9:13c94747c7, Aug 15 2020, 01:31:08) 
+[Clang 6.0 (clang-600.0.57)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from tweets.models import Tweet
+>>> obj = Tweet.objects.get(id=1)
+>>> obj.content
+'hello world'
+```
