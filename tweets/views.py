@@ -36,7 +36,20 @@ def tweet_detail_view(request, tweet_id, *args, **kwargs):
     serializer = TweetSerializer(obj)
     return Response(serializer.data, status=200)
   
-@api_view(["POST", ])
+@api_view(['DELETE', "POST"])
+@permission_classes([IsAuthenticated]) 
+def tweet_delete_view(request, tweet_id, *args, **kwargs):
+    qs = Tweet.objects.filter(id=tweet_id)
+    if not qs.exists():
+        return Response({}, status=404)
+    qs = qs.filter(user=request.user)
+    if not qs.exists():
+      return Response({"message": "not authorised"}, status=401)
+    obj = qs.first()
+    obj.delete()
+    return Response({"message": "Tweet removed"}, status=200)
+  
+@api_view(["POST"])
 # @authentication_classes([SessionAuthentication, MyCustomAuth]) default
 @permission_classes([IsAuthenticated]) #check if authenticated or the below function fails to run
 def tweet_create_view(request, *args, **kwargs):
