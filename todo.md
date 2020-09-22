@@ -124,5 +124,5 @@ Migrations for 'tweets':
     - Add field user to tweet
 ```
 
+To edit user in django : http://127.0.0.1:8000/admin/
 
-https://docs.djangoproject.com/en/3.1/topics/forms/
