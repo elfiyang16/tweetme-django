@@ -95,4 +95,6 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> obj = Tweet.objects.get(id=1)
 >>> obj.content
 'hello world'
+>>> obj2 = Tweet.objects.create(content="Hello there")
+>>> exit()
 ```
