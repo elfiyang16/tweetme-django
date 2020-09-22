@@ -27,7 +27,7 @@ SECRET_KEY = '5(n0y*c1*g6fv2xmifpgix7$ax-6=06!x2a_3glqj_0^w$z4y#'
 DEBUG = True
 # for enabling the safe redirect
 ALLOWED_HOSTS = ["127.0.0.1", "dev.trussle.com" ]
-
+LOGIN_URL = "/login"
 
 # Application definition
 
