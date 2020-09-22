@@ -126,3 +126,46 @@ Migrations for 'tweets':
 
 To edit user in django : http://127.0.0.1:8000/admin/
 
+
+- multiple way to deal with many to many relationship 
+
+```python
+>>> from tweets.models import Tweet
+>>> Tweet.objects.all()
+<QuerySet [<Tweet: Tweet object (38)>, <Tweet: Tweet object (37)>, <Tweet: Tweet object (36)>, <Tweet: Tweet object (35)>, <Tweet: Tweet object (34)>, <Tweet: Tweet object (33)>, <Tweet: Tweet object (32)>, <Tweet: Tweet object (31)>, <Tweet: Tweet object (30)>, <Tweet: Tweet object (29)>, <Tweet: Tweet object (28)>, <Tweet: Tweet object (27)>, <Tweet: Tweet object (26)>, <Tweet: Tweet object (25)>, <Tweet: Tweet object (24)>, <Tweet: Tweet object (23)>, <Tweet: Tweet object (22)>, <Tweet: Tweet object (21)>, <Tweet: Tweet object (20)>, <Tweet: Tweet object (19)>, '...(remaining elements truncated)...']>
+>>> from django.contrib.auth import get_user_model
+>>> User = get_user_model()
+>>> User.objects.all()
+<QuerySet [<User: elfi>]>
+>>> me = User.objects.first()
+>>> me
+<User: elfi>
+>>> obj = Tweet.objects.first()
+>>> obj.likes.add(me)
+>>> obj.likes.all()
+<QuerySet [<User: elfi>]>
+>>> obj.likes.remove(me)
+>>> obj.likes.all()
+<QuerySet []>
+>>> qs = User.objects.all()
+>>> obj.likes.set(qs)
+>>> obj.likes.all()
+<QuerySet [<User: elfi>]>
+>>> TweetLike.objects.all()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+NameError: name 'TweetLike' is not defined
+>>> from tweets.models import TweetLike
+>>> TweetLike.objects.all()
+<QuerySet [<TweetLike: TweetLike object (1)>, <TweetLike: TweetLike object (3)>]>
+>>> TweetLike.objects.first().timestamp
+datetime.datetime(2020, 9, 22, 20, 32, 15, 2487, tzinfo=<UTC>)
+>>> obj.likes.remove(me)
+>>> obj.likes.all()
+<QuerySet []>
+>>> TweetLike.objects.create(user=me, tweet=obj)
+<TweetLike: TweetLike object (4)>
+>>> obj.likes.all()
+<QuerySet [<User: elfi>]>
+>>> 
+```
