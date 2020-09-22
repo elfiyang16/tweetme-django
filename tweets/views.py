@@ -25,6 +25,9 @@ def tweet_list_view(request, *args, **kwargs):
     return JsonResponse(data)
 
 def tweet_create_view(request, *args, **kwargs):
+  '''
+  change to django rest framework
+  '''
   user = request.user
   if not request.user.is_authenticated:
     user = None
