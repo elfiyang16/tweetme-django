@@ -19,10 +19,12 @@ class TweetActionSerializer(serializers.Serializer):
 # The serializers in REST framework work very similarly to 
 #  Django's Form and ModelForm classes
 class TweetSerializer(serializers.ModelSerializer):
+  likes = serializers.SerializerMethodField(read_only=True)
   class Meta:
     model = Tweet
-    fields = ["content"]
-  
+    fields = ["id", "content", "likes"]
+  def get_likes(self, obj):
+    return obj.likes.count()
   def validate_content(self, value):
     if len(value) > MAX_TWEET_LENGTH:
         raise self.ValidationError("This tweet is too long")
