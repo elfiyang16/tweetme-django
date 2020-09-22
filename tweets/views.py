@@ -2,6 +2,8 @@ import random
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, JsonResponse
 from .models import Tweet
+from .forms import TweetForm
+
 # Create your views here.
 
 def home_view(request, *args, **kwargs):
@@ -10,14 +12,23 @@ def home_view(request, *args, **kwargs):
     # return HttpResponse("<h1>Hello World</h1>")
 
 def tweet_list_view(request, *args, **kwargs):
-  qs = Tweet.objects.all()
-  tweets_list = [{"id": x.id, "content": x.content, "likes": random.randint(0, 122)} for x in qs]
-  data = {
-    "isUser": False,
-    "response": tweets_list
-  }
-  return JsonResponse(data)
+    qs = Tweet.objects.all()
+    tweets_list = [{"id": x.id, "content": x.content, "likes": random.randint(0, 122)} for x in qs]
+    data = {
+      "isUser": False,
+      "response": tweets_list
+    }
+    return JsonResponse(data)
 
+def tweet_create_view(request, *args, **kwargs):
+  form = TweetForm(request.POST or None) #initialise with request data or none
+  if form.is_valid():
+    obj = form.save(commit=False)
+    #  do some other thing related to the form before save to db 
+    obj.save()
+    form = TweetForm() #init a new empty form 
+  return render(request, "components/form.html", context={"form": form})
+  
 def tweet_detail_view(request, tweet_id, *args, **kwargs):
     """
     return json data consumed by JS 

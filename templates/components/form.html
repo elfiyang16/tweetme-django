@@ -1,0 +1,7 @@
+<form method="POST">
+  {% csrf_token%}
+  <!-- Django ships with an easy-to-use protection against Cross Site Request Forgeries. When submitting a form via POST with CSRF protection enabled you must use the csrf_token template tag as in the preceding example. -->
+  {{ form.as_p }}  
+  <!-- will render them wrapped in <p> tags -->
+  <button type='submit' class='btn btn-secondary'>Save</button>
+</form>
