@@ -99,5 +99,30 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> exit()
 ```
 
+- create superuser
+`python manage.py createsuperuser`
+```   
+Username (leave blank to use 'elfi.yang@trussle.com'): elfi
+Email address: 
+Password: 
+Password (again):  (!23)
+Superuser created successfully.
+```
+```python
+ ./manage.py makemigrations
+You are trying to add a non-nullable field 'user' to tweet without a default; we can't do that (the database needs something to populate existing rows).
+Please select a fix:
+ 1) Provide a one-off default now (will be set on all existing rows with a null value for this column)
+ 2) Quit, and let me add a default in models.py
+Select an option: 1
+Please enter the default value now, as valid Python
+The datetime and django.utils.timezone modules are available, so you can do e.g. timezone.now
+Type 'exit' to exit this prompt
+>>> 1
+Migrations for 'tweets':
+  tweets/migrations/0003_tweet_user.py
+    - Add field user to tweet
+```
+
 
 https://docs.djangoproject.com/en/3.1/topics/forms/
