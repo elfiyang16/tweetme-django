@@ -5,6 +5,7 @@ from django.http import HttpResponse, Http404, JsonResponse
 from .models import Tweet
 from .forms import TweetForm
 from django.utils.http import is_safe_url
+from .serializers import TweetSerializer
 
 ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 # Create your views here.
@@ -23,8 +24,15 @@ def tweet_list_view(request, *args, **kwargs):
       "response": tweets_list
     }
     return JsonResponse(data)
-
+  
 def tweet_create_view(request, *args, **kwargs):
+    serializer = TweetSerializer(data=request.POST or None)
+    if serializer.is_valid():
+        obj = serializer.save(user=request.user)
+        return JsonResponse(serializer.data, status=201)
+    return JsonResponse({}, status=400)
+  
+def tweet_create_view_pure_django(request, *args, **kwargs):
   '''
   change to django rest framework
   '''
@@ -50,6 +58,7 @@ def tweet_create_view(request, *args, **kwargs):
     if request.is_ajax():
       return JsonResponse(form.errors, status=400)
   return render(request, "components/form.html", context={"form": form})
+  
   
 def tweet_detail_view(request, tweet_id, *args, **kwargs):
     """
