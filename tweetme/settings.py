@@ -26,7 +26,7 @@ SECRET_KEY = '5(n0y*c1*g6fv2xmifpgix7$ax-6=06!x2a_3glqj_0^w$z4y#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 # for enabling the safe redirect
-ALLOWED_HOSTS = ["127.0.0.1", "dev.trussle.com" ]
+ALLOWED_HOSTS = ["127.0.0.1", "dev.trussle.com" , "localhost"]
 LOGIN_URL = "/login"
 MAX_TWEET_LENGTH = 240
 TWEET_ACTION_OPTIONS = ["like", "unlike","retweet"]
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 3rd party 
     "rest_framework",
+    "corsheaders",
     #internal
     "tweets"
 ]
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -126,6 +128,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CORS_ORIGIN_ALLOW_ALL = True # any website has access to my api
+CORS_URLS_REGEX = r'^/api/.*$'
+
 
 DEFAULT_RENDERER_CLASSES = [
         'rest_framework.renderers.JSONRenderer',
