@@ -169,3 +169,7 @@ datetime.datetime(2020, 9, 22, 20, 32, 15, 2487, tzinfo=<UTC>)
 <QuerySet [<User: elfi>]>
 >>> 
 ```
+
+- run test
+
+`./manage.py test`
