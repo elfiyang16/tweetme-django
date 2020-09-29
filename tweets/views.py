@@ -91,7 +91,7 @@ def tweet_action_view(request, *args, **kwargs):
 # @authentication_classes([SessionAuthentication, MyCustomAuth]) default
 @permission_classes([IsAuthenticated]) #check if authenticated or the below function fails to run
 def tweet_create_view(request, *args, **kwargs):
-    serializer = TweetCreateSerializer(data=request.POST)
+    serializer = TweetCreateSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         serializer.save(user=request.user)
         return Response(serializer.data, status=201)
