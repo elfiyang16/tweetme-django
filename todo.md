@@ -173,3 +173,10 @@ datetime.datetime(2020, 9, 22, 20, 32, 15, 2487, tzinfo=<UTC>)
 - run test
 
 `./manage.py test`
+
+- bundle static files
+```
+ ./manage.py collectstatic
+
+162 static files copied to '/Users/elfi.yang@trussle.com/Documents/Tweetme-Django-React/tweetme/static-root'.
+```
